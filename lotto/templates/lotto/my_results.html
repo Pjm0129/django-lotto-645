@@ -1,0 +1,38 @@
+{% extends "lotto/base.html" %}
+
+{% block content %}
+<h2>내 당첨 확인</h2>
+
+{% if results %}
+<table border="1">
+    <thead>
+        <tr>
+            <th>회차</th>
+            <th>내 번호</th>
+            <th>당첨 번호</th>
+            <th>보너스 번호</th>
+            <th>일치 개수</th>
+            <th>보너스 일치</th>
+            <th>결과</th>
+            <th>당첨금</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results %}
+        <tr>
+            <td>{{ result.draw.round_no }}회차</td>
+            <td>{{ result.ticket.numbers }}</td>
+            <td>{{ result.draw.numbers }}</td>
+            <td>{{ result.draw.bonus_number }}</td>
+            <td>{{ result.match_count }}</td>
+            <td>{{ result.bonus_match }}</td>
+            <td>{{ result.rank }}</td>
+            <td>{{ result.prize_amount }}원</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>아직 당첨 결과가 없습니다. 관리자가 추첨을 실행한 뒤 확인할 수 있습니다.</p>
+{% endif %}
+{% endblock %}

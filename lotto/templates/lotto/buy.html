@@ -1,0 +1,64 @@
+{% extends "lotto/base.html" %}
+
+{% block content %}
+<h2>복권 구매</h2>
+
+<p>복권 가격: 1,000원</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <h3>구매 방식</h3>
+    {{ form.pick_type }}
+
+    <div id="manual-number-area" style="display: none;">
+        <h3>수동 번호 입력</h3>
+        <p>1부터 45까지의 중복 없는 숫자 6개를 입력하세요.</p>
+
+        <p>{{ form.num1.label }}: {{ form.num1 }}</p>
+        <p>{{ form.num2.label }}: {{ form.num2 }}</p>
+        <p>{{ form.num3.label }}: {{ form.num3 }}</p>
+        <p>{{ form.num4.label }}: {{ form.num4 }}</p>
+        <p>{{ form.num5.label }}: {{ form.num5 }}</p>
+        <p>{{ form.num6.label }}: {{ form.num6 }}</p>
+    </div>
+
+    <button type="submit">구매하기</button>
+</form>
+
+<script>
+    // 수동 구매를 선택했을 때만 번호 입력 영역을 보여주는 함수
+    function toggleManualNumberArea() {
+        const manualArea = document.getElementById("manual-number-area");
+        const autoRadio = document.querySelector('input[name="pick_type"][value="AUTO"]');
+        const manualRadio = document.querySelector('input[name="pick_type"][value="MANUAL"]');
+
+        if (manualRadio.checked) {
+            manualArea.style.display = "block";
+        } else {
+            manualArea.style.display = "none";
+
+            // 자동 구매 선택 시 기존에 입력했던 수동 번호를 비움
+            document.getElementById("id_num1").value = "";
+            document.getElementById("id_num2").value = "";
+            document.getElementById("id_num3").value = "";
+            document.getElementById("id_num4").value = "";
+            document.getElementById("id_num5").value = "";
+            document.getElementById("id_num6").value = "";
+        }
+    }
+
+    // 페이지가 처음 열렸을 때 현재 선택 상태에 맞게 화면 표시
+    document.addEventListener("DOMContentLoaded", function () {
+        const radios = document.querySelectorAll('input[name="pick_type"]');
+
+        radios.forEach(function (radio) {
+            radio.addEventListener("change", toggleManualNumberArea);
+        });
+
+        toggleManualNumberArea();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "lotto/base.html" %}
+
+{% block content %}
+<h2>관리자 추첨</h2>
+
+<p>현재 추첨 대상 회차: <strong>{{ next_round }}회차</strong></p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">추첨 실행</button>
+</form>
+
+<p>추첨은 해당 회차에 구매된 복권이 있을 때만 실행됩니다.</p>
+{% endblock %}

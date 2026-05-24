@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>6/45 Lotto</title>
+</head>
+
+<body>
+    <h1><a href="{% url 'home' %}">6/45 Lotto</a></h1>
+
+    <nav>
+        <a href="{% url 'home' %}">홈</a> |
+        <a href="{% url 'buy_ticket' %}">복권 구매</a> |
+        <a href="{% url 'my_tickets' %}">내 구매 내역</a> |
+        <a href="{% url 'my_results' %}">당첨 확인</a> |
+
+        {% if user.is_staff %}
+        <a href="{% url 'admin_dashboard' %}">관리자 대시보드</a> |
+        <a href="{% url 'draw_lotto' %}">추첨하기</a> |
+        <a href="{% url 'winners' %}">당첨 내역</a> |
+        {% endif %}
+
+        <a href="/admin/">Django Admin</a> |
+
+        {% if user.is_authenticated %}
+        <strong>{{ user.username }}</strong>님
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">로그아웃</button>
+        </form>
+        {% else %}
+        <a href="{% url 'login' %}">로그인</a> |
+        <a href="{% url 'signup' %}">회원가입</a>
+        {% endif %}
+    </nav>
+
+    <hr>
+
+    {% if messages %}
+    {% for message in messages %}
+    <p><strong>{{ message }}</strong></p>
+    {% endfor %}
+    <hr>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

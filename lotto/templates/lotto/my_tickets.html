@@ -1,0 +1,32 @@
+{% extends "lotto/base.html" %}
+
+{% block content %}
+<h2>내 구매 내역</h2>
+
+{% if tickets %}
+<table border="1">
+    <thead>
+        <tr>
+            <th>회차</th>
+            <th>번호</th>
+            <th>구매 방식</th>
+            <th>가격</th>
+            <th>구매일</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ticket in tickets %}
+        <tr>
+            <td>{{ ticket.round_no }}</td>
+            <td>{{ ticket.numbers }}</td>
+            <td>{{ ticket.get_pick_type_display }}</td>
+            <td>{{ ticket.price }}원</td>
+            <td>{{ ticket.created_at }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>아직 구매한 복권이 없습니다.</p>
+{% endif %}
+{% endblock %}

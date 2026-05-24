@@ -1,0 +1,44 @@
+{% extends "lotto/base.html" %}
+
+{% block content %}
+<h2>관리자 대시보드</h2>
+
+<h3>전체 판매 요약</h3>
+<p>총 판매 복권 수: {{ total_tickets }}장</p>
+<p>총 판매 금액: {{ total_sales }}원</p>
+
+<hr>
+
+<h3>회차별 판매 내역</h3>
+
+{% if sales_by_round %}
+<table border="1">
+    <thead>
+        <tr>
+            <th>회차</th>
+            <th>판매 수량</th>
+            <th>판매 금액</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sale in sales_by_round %}
+        <tr>
+            <td>{{ sale.round_no }}회차</td>
+            <td>{{ sale.ticket_count }}장</td>
+            <td>{{ sale.sales }}원</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>판매 내역이 없습니다.</p>
+{% endif %}
+
+<hr>
+
+<p>
+    <a href="{% url 'draw_lotto' %}">추첨하기</a> |
+    <a href="{% url 'winners' %}">당첨 내역 보기</a> |
+    <a href="/admin/">Django Admin</a>
+</p>
+{% endblock %}
