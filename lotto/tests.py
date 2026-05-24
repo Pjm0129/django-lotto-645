@@ -37,7 +37,7 @@ class LottoServiceTest(TestCase):
         self.assertEqual(match_count, 6)
         self.assertFalse(bonus_match)
         self.assertEqual(rank, "1등")
-        self.assertEqual(prize_amount, 100000000)
+        self.assertEqual(prize_amount, 2000000000)
 
     def test_second_rank(self):
         match_count, bonus_match, rank, prize_amount = calculate_rank(
@@ -92,8 +92,8 @@ class LottoModelTest(TestCase):
             match_count=6,
             bonus_match=False,
             rank="1등",
-            prize_amount=100000000,
+            prize_amount=2000000000,
         )
 
         self.assertEqual(result.rank, "1등")
-        self.assertEqual(result.prize_amount, 100000000)
+        self.assertEqual(result.prize_amount, 2000000000)
